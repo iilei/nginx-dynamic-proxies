@@ -3,13 +3,13 @@
 describe "generate-proxy-config"
   describe "not a single env var matching"
     it "creates empty file"
-      ./generate-proxy-config.sh SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_EMPTY shpec/case1a.proxy.conf
+      $( ./generate-proxy-config.sh SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_EMPTY shpec/case1a.proxy.conf ) &> /dev/null
       assert blank $(cat shpec/case1a.proxy.conf)
     end
     it "purges a previously defined file"
       touch shpec/case1b.proxy.conf
       echo "FOOOOO" >> shpec/case1b.proxy.conf
-      ./generate-proxy-config.sh SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_EMPTY shpec/case1b.proxy.conf
+      $( ./generate-proxy-config.sh SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_EMPTY shpec/case1b.proxy.conf ) &> /dev/null
       assert blank $(cat shpec/case1b.proxy.conf)
     end
   end

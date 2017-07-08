@@ -1,6 +1,24 @@
 # Generate nginx config based on env vars
 
-example:
+Utility to map env vars by convention to proxy settings.
+
+## Requirements
+
+* [gettext/envsubst](https://www.gnu.org/software/gettext/gettext.html) which is included
+in [alpine linux](https://pkgs.alpinelinux.org/package/edge/main/x86_64/gettext) attow.
+
+## Usage
+
+Assuming your environment variables define zero or more of
+
+```sh
+export <CUSTOM_PREFIX:API>_PROXY_ENDPOINT_<PROXY_NAME>=https://example.com
+export <CUSTOM_PREFIX:API>_PROXY_PATH_<PROXY_NAME>=/example
+```
+
+Executing `./generate-proxy-config.sh` creates a proxy setting for you to be used with nginx.
+
+As an example:
 
 ```sh
 
@@ -13,23 +31,37 @@ export API_PROXY_PATH_FOO_BAZ=foo/baz
 
 ```
 
-returns
+writes to `./proxy.conf`:
 
 ```
-
-# mapping based on env vars:
-#   API_PROXY_PATH_FOO_BAR (location)
-#   API_PROXY_ENDPOINT_FOO_BAR (proxy_pass)
 location foo/bar/ {
     proxy_pass https://blah.example.com/foobar;
 }
 
-# mapping based on env vars:
-#   API_PROXY_PATH_FOO_BAZ (location)
-#   API_PROXY_ENDPOINT_FOO_BAZ (proxy_pass)
 location foo/baz/ {
     proxy_pass https://blah.example.com/foobaz;
 }
+
+```
+
+Or, equivalent to the above with custom namespace and custom output path:
+
+```sh
+
+export MY_SERVICE_API_PROXY_ENDPOINT_FOO_BAR=https://my-service.example.com/foobar
+export MY_SERVICE_API_PROXY_PATH_FOO_BAR=/my-service/foobar
+
+./generate-proxy-config.sh MY_SERVICE_API  /etc/nginx/proxy.conf
+
+```
+
+writes to ` /etc/nginx/proxy.conf`:
+
+```
+location /my-service/foobar/ {
+    proxy_pass https://my-service.example.com/foobar;
+}
+
 
 ```
 

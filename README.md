@@ -65,6 +65,26 @@ location /my-service/foobar/ {
 
 ```
 
+You can now either reference it or directly embed it in your default.conf:
+
+```smartyconfig
+# Your default.conf.tpl
+server {
+    # basic config
+
+    # **********************************************************
+    # start env-based proxy config
+    # end env-based proxy config
+    # **********************************************************
+}
+```
+
+Replace the `# start env-based proxy config`-Line:
+
+```sh
+sed "/# start env-based proxy config/r proxy.conf" default.conf.tpl >| default.conf
+```
+
 ### Test framework
 
 See [rylnd/shpec](https://github.com/rylnd/shpec)

@@ -1,2 +1,3 @@
 default.conf
 proxy.conf
+shpec/*.conf

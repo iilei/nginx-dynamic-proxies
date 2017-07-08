@@ -32,3 +32,7 @@ location foo/baz/ {
 }
 
 ```
+
+### Test framework
+
+See [rylnd/shpec](https://github.com/rylnd/shpec)

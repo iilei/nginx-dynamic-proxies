@@ -3,6 +3,6 @@
 #   ${PROXY_PATH_NAME} (location)
 #   ${PROXY_ENDPOINT_NAME} (proxy_pass)
 #
-location ${PROXY_PATH}/ {
+location ${PROXY_PATH} {
     proxy_pass ${PROXY_ENDPOINT};
 }

@@ -18,7 +18,7 @@ describe "generate-proxy-config"
     it "generates file containing single corresponding config"
 
       export SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_PROXY_ENDPOINT_FOO=http://foo.example.com; \
-      export SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_PROXY_PATH_FOO=/example/foo; \
+      export SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_PROXY_PATH_FOO=/example/foo/; \
       ./generate-proxy-config.sh SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING shpec/case2a.proxy.conf
       assert equal "$(echo $(cat shpec/case2a.proxy.conf | grep "^location "))" "location /example/foo/ {"
       assert equal "$(echo $(cat shpec/case2a.proxy.conf | grep "^    proxy_pass "))" "proxy_pass http://foo.example.com;"
@@ -26,9 +26,9 @@ describe "generate-proxy-config"
 
     it "generates file containing multiple corresponding configs"
       export SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_PROXY_ENDPOINT_FOO=http://foo.example.com; \
-      export SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_PROXY_PATH_FOO=/foo; \
+      export SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_PROXY_PATH_FOO=/foo/; \
       export SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_PROXY_ENDPOINT_BAR=http://bar.example.com; \
-      export SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_PROXY_PATH_BAR=/bar; \
+      export SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING_PROXY_PATH_BAR=/bar/; \
       ./generate-proxy-config.sh SHPEC_API_NS_PREFIX__SOLELY__FOR__TESTING shpec/case2b.proxy.conf
       assert equal "$(echo $(cat shpec/case2b.proxy.conf | grep "^location \/foo"))" "location /foo/ {"
       assert equal "$(echo $(cat shpec/case2b.proxy.conf | grep "^    proxy_pass http:\/\/foo"))" "proxy_pass http://foo.example.com;"
